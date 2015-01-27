@@ -141,24 +141,12 @@ sub new {
 
 # Helper function:
 # Convert from binary to hexadecimal
-#
-# Borrowed from http://www.perlmonks.org/index.pl?node_id=644225
+# takes a string of zeros and ones
+# returns a hexadecimal string
 sub b2h {
-    my $num   = shift;
-    my $WIDTH = 32;
-    my $index = length($num) - $WIDTH;
-    my $hex = '';
-    do {
-        my $width = $WIDTH;
-        if ($index < 0) {
-            $width += $index;
-            $index = 0;
-        }
-        my $cut_string = substr($num, $index, $width);
-        $hex = sprintf('%X', oct("0b$cut_string")) . $hex;
-        $index -= $WIDTH;
-    } while ($index > (-1 * $WIDTH));
-    return $hex;
+    my $bit_string   = shift;
+    my $binary_block = pack( 'B*', $bit_string );
+    return unpack( 'H*', $binary_block );
 }
 
 # Reduse the size of an image using GD
